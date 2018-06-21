@@ -115,26 +115,26 @@ def main():
                          (datetime.now() - start_time))
         if i == (len(tactic_data[0]) / 2):
             logger.info('Half-way done in %s seconds...',
-                        (datetime.now() - start_time)
+                        (datetime.now() - start_time))
         for tactic_id in tactic:
-            bad_pixel={}  # A dictionary of bad tactic-pixel mapping
+            bad_pixel = {}  # A dictionary of bad tactic-pixel mapping
             # A list of pixels associated with a tactic-id
-            pixel_list=tactic[tactic_id]
+            pixel_list = tactic[tactic_id]
             logger.debug(pixel_list)
             for pixel in pixel_list:
                 # Unescape URL by removing backslashes in pixel
-                clean_pixel=pixel.replace('\\', '')
+                clean_pixel = pixel.replace('\\', '')
                 logger.debug(
                     'Going to test pixel "%s" on tactic_id = %d', clean_pixel, tactic_id)  # Log this to investigate exceptions
                 try:
-                    r=requests.request("GET", clean_pixel, headers=headers)
-                    response=r.status_code
+                    r = requests.request("GET", clean_pixel, headers=headers)
+                    response = r.status_code
                     if response > 399:  # Look for erroneous response codes
                         logger.debug(
                             'Got a %s response on pixel %s with tactic %d.', response, clean_pixel, tactic_id)
                         fail += 1
                         if tactic_id not in bad_pixel:
-                            bad_pixel[tactic_id]=[]
+                            bad_pixel[tactic_id] = []
                             bad_pixel[tactic_id].append(clean_pixel)
                         else:
                             bad_pixel[tactic_id].append(clean_pixel)
@@ -143,7 +143,7 @@ def main():
                         'Could not reach pixel %s with tactic %d.', clean_pixel, tactic_id)  # Look for connection errors
                     fail += 1
                     if tactic_id not in bad_pixel:
-                        bad_pixel[tactic_id]=[]
+                        bad_pixel[tactic_id] = []
                         bad_pixel[tactic_id].append(clean_pixel)
                     else:
                         bad_pixel[tactic_id].append(clean_pixel)
